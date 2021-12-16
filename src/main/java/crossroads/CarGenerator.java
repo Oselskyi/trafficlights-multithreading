@@ -3,22 +3,21 @@ package crossroads;
 import java.util.Random;
 
 public class CarGenerator implements Runnable {
-    Queue trafficQueue;
+    public volatile HorizontalRoad horizontalRoad;
+    public volatile VerticalRoad verticalRoad;
 
-    public CarGenerator(Queue trafficQueue) {
-        this.trafficQueue = trafficQueue;
+    public CarGenerator(HorizontalRoad horizontalRoad, VerticalRoad verticalRoad) {
+
+        this.horizontalRoad = horizontalRoad;
+        this.verticalRoad = verticalRoad;
     }
 
     @Override
     public void run() {
         for (int i = 0; i < 15; i++) {
-            trafficQueue.add(new Car(getRandomBrand()));
 
-            try {
-                Thread.sleep(300);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            verticalRoad.addToVerticalTraffic(new Car(getRandomBrand()));
+            horizontalRoad.addToHorizontalTraffic(new Car(getRandomBrand()));
         }
     }
 

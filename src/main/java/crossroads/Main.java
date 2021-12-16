@@ -1,21 +1,24 @@
 package crossroads;
 
 public class Main {
-
-
+    public static Object lighter = new Object();
+    public static volatile HorizontalRoad horizontalRoad = new HorizontalRoad();
+    public static volatile VerticalRoad verticalRoad = new VerticalRoad();
     public static void main(String[] args) {
-        Queue trafficQueue = new Queue();
 
-        CarGenerator carGenerator = new CarGenerator(trafficQueue);
-        TrafficLights trafficLights = new TrafficLights(trafficQueue);
 
-        Thread thread = new Thread(carGenerator);
-        Thread thread1 = new Thread(trafficLights);
-        Thread thread2 = new Thread(new Changer());
 
-        thread.start();
-        thread1.start();
-        thread2.start();
+        Thread carGenerate = new Thread(new CarGenerator(horizontalRoad, verticalRoad));
+        Thread lighter = new Thread(new Tumbler());
+        Thread horizontal = new Thread(new HorizontalThread());
+        Thread vertical = new Thread(new VerticalThread());
+
+
+        carGenerate.start();
+        lighter.start();
+        horizontal.start();
+        vertical.start();
+
 
     }
 }
