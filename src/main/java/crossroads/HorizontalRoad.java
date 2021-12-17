@@ -1,17 +1,16 @@
 package crossroads;
 
 import java.util.LinkedList;
-import java.util.List;
 
 public class HorizontalRoad {
 
-    private static volatile LinkedList<Car> horizontalTraffic;
+    private static LinkedList<Car> horizontalTraffic;
 
     public HorizontalRoad() {
         horizontalTraffic = new LinkedList<>();
     }
 
-    public synchronized void addToHorizontalTraffic(Car car) {
+    public void add(Car car) {
 
         horizontalTraffic.add(car);
         System.out.println(car + " has driven from keletska street");
@@ -22,23 +21,19 @@ public class HorizontalRoad {
         }
     }
 
-    public synchronized Car getHorizontal() {
+    public Car get() {
 
+        Car car = horizontalTraffic.getFirst();
 
-        //while (horizontalTraffic.isEmpty()) {
-
-            Car car = horizontalTraffic.getFirst();
-
-            horizontalTraffic.removeFirst();
+        horizontalTraffic.removeFirst();
         try {
             Thread.sleep(300);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-            return car;
-        }
-      //  return null;
-  //  }
+        return car;
+    }
+
 
     public boolean isEmpty() {
         return horizontalTraffic.isEmpty();

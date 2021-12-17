@@ -3,6 +3,7 @@ package crossroads;
 import java.util.Random;
 
 public class CarGenerator implements Runnable {
+
     public volatile HorizontalRoad horizontalRoad;
     public volatile VerticalRoad verticalRoad;
 
@@ -16,8 +17,8 @@ public class CarGenerator implements Runnable {
     public void run() {
         for (int i = 0; i < 15; i++) {
 
-            verticalRoad.addToVerticalTraffic(new Car(getRandomBrand()));
-            horizontalRoad.addToHorizontalTraffic(new Car(getRandomBrand()));
+            verticalRoad.add(new Car(getRandomBrand()));
+            horizontalRoad.add(new Car(getRandomBrand()));
         }
     }
 

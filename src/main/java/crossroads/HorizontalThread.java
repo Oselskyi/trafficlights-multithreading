@@ -7,29 +7,28 @@ public class HorizontalThread implements Runnable {
 
     @Override
     public void run() {
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if (horizontalRoad.isEmpty()) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-
         for (int i = 0; i < 15; i++) {
 
-            synchronized (Main.lighter) {
+            synchronized (Main.monitor) {
                 try {
                     while (Lighter.vertical) {
-                        Main.lighter.wait();
+                        Main.monitor.wait();
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
-                Car car = horizontalRoad.getHorizontal();
-
+                Car car = horizontalRoad.get();
                 System.out.println("\n" + car + " DROVE ACROSS THE 600-YEARS STREET" + "\n");
 
-                //Lighter.changeLight();
-                Main.lighter.notify();
+                Main.monitor.notify();
             }
         }
     }
